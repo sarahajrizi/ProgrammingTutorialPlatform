@@ -1,4 +1,5 @@
-import { useState } from 'react';
+// /src/screens/QuizScreen.js
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -10,23 +11,28 @@ import {
 import { useProgress } from '../components/ProgressContext';
 
 export default function QuizScreen({ route, navigation }) {
+  // Marrim quiz-in nga parametri
   const { quiz } = route.params;
-  const { progress, saveProgress } = useProgress(); 
+  const { progress, saveProgress } = useProgress(); // Nëse s'doni kontekst, hiqeni
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [showResults, setShowResults] = useState(false);
 
-  const handleAnswer = (index) => {
+  const handleAnswer = (optionIndex) => {
     if (!showResults) {
-      const isCorrect = quiz.questions[currentQuestion].correctAnswers.includes(index);
+      // Shikojmë nëse përgjigjja është e saktë
+      const isCorrect = quiz.questions[currentQuestion].correctAnswers.includes(optionIndex);
       if (isCorrect) setScore(score + 1);
 
+      // Kalojmë në pyetjen tjetër ose shfaqim rezultatet
       if (currentQuestion < quiz.questions.length - 1) {
         setCurrentQuestion(currentQuestion + 1);
       } else {
         setShowResults(true);
 
+        // Ruajmë progresin (opsional, nëse s'e përdorni, mund ta hiqni)
+        const finalScore = score + (isCorrect ? 1 : 0);
         const newProgress = {
           ...progress,
           completedQuizzes: {
@@ -35,7 +41,7 @@ export default function QuizScreen({ route, navigation }) {
           },
           scores: {
             ...progress.scores,
-            [quiz.id]: score + (isCorrect ? 1 : 0),
+            [quiz.id]: finalScore,
           },
         };
         saveProgress(newProgress);
@@ -47,12 +53,14 @@ export default function QuizScreen({ route, navigation }) {
     <SafeAreaView style={styles.safeContainer}>
       <StatusBar barStyle="dark-content" backgroundColor="#f0f4f7" />
 
+      {/* Kreu i ekranit me titullin e quiz-it */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>{quiz.title}</Text>
       </View>
 
       <View style={styles.container}>
         {showResults ? (
+          /* Nëse quiz-i ka mbaruar */
           <View style={styles.resultsContainer}>
             <Text style={styles.scoreText}>
               Score: {score}/{quiz.questions.length}
@@ -65,20 +73,20 @@ export default function QuizScreen({ route, navigation }) {
             </TouchableOpacity>
           </View>
         ) : (
+          /* Nëse jemi akoma duke zgjidhur quiz-in */
           <View style={styles.questionContainer}>
             <Text style={styles.questionCount}>
               Question {currentQuestion + 1}/{quiz.questions.length}
             </Text>
-
             <Text style={styles.questionText}>
               {quiz.questions[currentQuestion].question}
             </Text>
 
-            {quiz.questions[currentQuestion].options.map((option, index) => (
+            {quiz.questions[currentQuestion].options.map((option, idx) => (
               <TouchableOpacity
-                key={index}
+                key={idx}
                 style={styles.optionButton}
-                onPress={() => handleAnswer(index)}
+                onPress={() => handleAnswer(idx)}
               >
                 <Text style={styles.optionText}>{option}</Text>
               </TouchableOpacity>
@@ -116,11 +124,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 8,
     padding: 20,
+    // Hijet në iOS + Android
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 2,
+
     flex: 1,
     justifyContent: 'center',
   },

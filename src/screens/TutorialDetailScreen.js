@@ -4,15 +4,21 @@ import React from 'react';
 import { View, StyleSheet, Button } from 'react-native';
 import { WebView } from 'react-native-webview';
 
-// Importet e quiz-eve dhe ushtrimeve
-import { javascriptQuizzes } from '../data/quizzes';
-import { javascriptExercises } from '../data/exercises';
+import { getQuizzesByCategory } from '../data/quizzes';
+import { getExercisesByCategory } from '../data/exercises';
 
 export default function TutorialDetailScreen({ route, navigation }) {
-  // Marrim objektin "tutorial" nga parametri i navigimit (nëse përdoret)
   const { tutorial } = route.params;
 
-  // Përmbajtja HTML si shembull
+  // Marrim quiz-et e kategorisë (mund të jetë bosh ose me disa quiz-e)
+  const quizList = getQuizzesByCategory(tutorial.category);
+  const selectedQuiz = quizList.length > 0 ? quizList[0] : null;
+
+  // Marrim ushtrimet e kategorisë (mund të jetë bosh ose me disa ushtrime)
+  const exerciseList = getExercisesByCategory(tutorial.category);
+  const selectedExercise = exerciseList.length > 0 ? exerciseList[0] : null;
+
+  // Përmbajtja HTML e shembullit
   const htmlContent = `
     <html>
       <head>
@@ -41,26 +47,31 @@ function greet() {
 
   return (
     <View style={styles.container}>
+      {/* Butoni për të nisur quiz-in, vetëm nëse kemi ndonjë quiz */}
+      {selectedQuiz ? (
+        <Button
+          title="Start Quiz"
+          onPress={() =>
+            navigation.navigate('Quiz', { quiz: selectedQuiz })
+          }
+        />
+      ) : (
+        <Button title="No Quiz Available" onPress={() => {}} disabled />
+      )}
 
-      {/* Butoni për të nisur quiz-in */}
-      <Button
-        title="Start Quiz"
-        onPress={() => navigation.navigate('Quiz', {
-          // Mund të zgjedhësh cilindo quiz nga javascriptQuizzes
-          quiz: javascriptQuizzes[0]
-        })}
-      />
+      {/* Butoni për ushtrimin praktik, vetëm nëse kemi ndonjë ushtrim */}
+      {selectedExercise ? (
+        <Button
+          title="Practice Exercise"
+          onPress={() =>
+            navigation.navigate('Exercise', { exercise: selectedExercise })
+          }
+        />
+      ) : (
+        <Button title="No Exercise Available" onPress={() => {}} disabled />
+      )}
 
-      {/* Butoni për ushtrimin praktik */}
-      <Button
-        title="Practice Exercise"
-        onPress={() => navigation.navigate('Exercise', {
-          // Mund të zgjedhësh cilindo ushtrim nga javascriptExercises
-          exercise: javascriptExercises[0]
-        })}
-      />
-
-      {/* Shfaq përmbajtjen HTML në një WebView */}
+      {/* Shfaq përmbajtjen HTML në WebView */}
       <WebView
         originWhitelist={['*']}
         source={{ html: htmlContent }}
@@ -71,10 +82,6 @@ function greet() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  webview: {
-    flex: 1,
-  },
+  container: { flex: 1 },
+  webview: { flex: 1 },
 });
