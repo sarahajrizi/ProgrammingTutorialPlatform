@@ -8,32 +8,31 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-const tutorials = [
-  { id: '1', title: 'JavaScript Basics', category: 'JavaScript Basics' },
-  { id: '2', title: 'ES6 Features', category: 'ES6 Features' },
-  { id: '3', title: 'React Components', category: 'React Components' },
-  { id: '4', title: 'State and Props', category: 'State and Props' },
-];
-
 export default function TutorialsScreen({ navigation }) {
+  // Vetëm 4 kurset kryesore
+  const mainTutorials = [
+    { id: 'js-b', title: 'JavaScript Basics' },
+    { id: 'es6-f', title: 'ES6 Features' },
+    { id: 'react-c', title: 'React Components' },
+    { id: 'state-p', title: 'State and Props' },
+  ];
+
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Available Tutorials</Text>
+      <Text style={styles.header}>Available Courses</Text>
 
       <FlatList
-        data={tutorials}
+        data={mainTutorials}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.item}
-            onPress={() =>
-              navigation.navigate('TutorialDetail', { tutorial: item })
-            }
+            onPress={() => navigation.navigate('TutorialDetail', { course: item })}
           >
             <Text style={styles.title}>{item.title}</Text>
-            <Text style={styles.category}>{item.category}</Text>
           </TouchableOpacity>
         )}
+        contentContainerStyle={{ paddingBottom: 20 }}
       />
     </View>
   );
@@ -44,15 +43,14 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 15,
   },
   item: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fff',
     padding: 15,
     borderRadius: 8,
     marginBottom: 10,
     elevation: 2,
   },
   title: { fontSize: 16, fontWeight: '600' },
-  category: { fontSize: 14, color: '#666', marginTop: 5 },
 });
