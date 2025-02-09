@@ -1,13 +1,20 @@
-// /src/screens/QuizScreen.js
-
 import { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  SafeAreaView,
+  StatusBar
+} from 'react-native';
 import { useProgress } from '../components/ProgressContext';
+// Nëse dëshironi të përdorni ikona, importoni diçka si:
+// import { Ionicons } from '@expo/vector-icons';
 
 export default function QuizScreen({ route, navigation }) {
   const { quiz } = route.params;
-
   const { progress, saveProgress } = useProgress(); // MERR context-in
+
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [showResults, setShowResults] = useState(false);
@@ -22,15 +29,16 @@ export default function QuizScreen({ route, navigation }) {
       } else {
         setShowResults(true);
 
+        // RUAN progresin
         const newProgress = {
           ...progress,
           completedQuizzes: {
             ...progress.completedQuizzes,
-            [quiz.id]: true, 
+            [quiz.id]: true, // p.sh. "js1": true
           },
           scores: {
             ...progress.scores,
-            [quiz.id]: score + (isCorrect ? 1 : 0), 
+            [quiz.id]: score + (isCorrect ? 1 : 0), // ruajmë pikët për këtë quiz
           },
         };
         saveProgress(newProgress);
@@ -39,46 +47,133 @@ export default function QuizScreen({ route, navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{quiz.title}</Text>
+    <SafeAreaView style={styles.safeContainer}>
+      {/* StatusBar me ngjyrë të bardhë ose "light-content" në varësi të preferencës */}
+      <StatusBar barStyle="dark-content" backgroundColor="#f0f4f7" />
 
-      {showResults ? (
-        <View style={styles.results}>
-          <Text style={styles.score}>
-            Score: {score}/{quiz.questions.length}
-          </Text>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.goBack()}
-          >
-            <Text style={styles.buttonText}>Back to Tutorials</Text>
-          </TouchableOpacity>
-        </View>
-      ) : (
-        <View style={styles.questionContainer}>
-          <Text style={styles.questionNumber}>
-            Question {currentQuestion + 1}/{quiz.questions.length}
-          </Text>
+      {/* Header i thjeshtë me titullin e quiz-it */}
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>{quiz.title}</Text>
+      </View>
 
-          <Text style={styles.questionText}>
-            {quiz.questions[currentQuestion].question}
-          </Text>
-
-          {quiz.questions[currentQuestion].options.map((option, index) => (
+      <View style={styles.container}>
+        {showResults ? (
+          <View style={styles.resultsContainer}>
+            <Text style={styles.scoreText}>
+              Score: {score}/{quiz.questions.length}
+            </Text>
             <TouchableOpacity
-              key={index}
-              style={styles.optionButton}
-              onPress={() => handleAnswer(index)}
+              style={styles.backButton}
+              onPress={() => navigation.goBack()}
             >
-              <Text style={styles.optionText}>{option}</Text>
+              <Text style={styles.backButtonText}>Back to Tutorials</Text>
             </TouchableOpacity>
-          ))}
-        </View>
-      )}
-    </View>
+          </View>
+        ) : (
+          <View style={styles.questionContainer}>
+            <Text style={styles.questionCount}>
+              Question {currentQuestion + 1}/{quiz.questions.length}
+            </Text>
+
+            <Text style={styles.questionText}>
+              {quiz.questions[currentQuestion].question}
+            </Text>
+
+            {quiz.questions[currentQuestion].options.map((option, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.optionButton}
+                onPress={() => handleAnswer(index)}
+              >
+                <Text style={styles.optionText}>{option}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeContainer: {
+    flex: 1,
+    backgroundColor: '#f0f4f7',
+  },
+  header: {
+    backgroundColor: '#ffffff',
+    paddingVertical: 15,
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#ccc',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#2c3e50',
+  },
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+  questionContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    padding: 20,
+    // Hijet në iOS + Android
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 2,
 
+    // Shtrirja
+    flex: 1,
+    justifyContent: 'center',
+  },
+  questionCount: {
+    fontSize: 14,
+    marginBottom: 5,
+    color: '#666',
+  },
+  questionText: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 20,
+    color: '#333',
+  },
+  optionButton: {
+    backgroundColor: '#1e90ff',
+    padding: 12,
+    borderRadius: 8,
+    marginVertical: 6,
+  },
+  optionText: {
+    color: '#fff',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  resultsContainer: {
+    // Qendra gjerësore dhe gjatësore
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  scoreText: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: '#2c3e50',
+  },
+  backButton: {
+    backgroundColor: '#1e90ff',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+  },
+  backButtonText: {
+    color: '#fff',
+    fontSize: 16,
+  },
 });
