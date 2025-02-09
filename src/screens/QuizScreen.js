@@ -8,12 +8,10 @@ import {
   StatusBar
 } from 'react-native';
 import { useProgress } from '../components/ProgressContext';
-// Nëse dëshironi të përdorni ikona, importoni diçka si:
-// import { Ionicons } from '@expo/vector-icons';
 
 export default function QuizScreen({ route, navigation }) {
   const { quiz } = route.params;
-  const { progress, saveProgress } = useProgress(); // MERR context-in
+  const { progress, saveProgress } = useProgress(); 
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
@@ -29,16 +27,15 @@ export default function QuizScreen({ route, navigation }) {
       } else {
         setShowResults(true);
 
-        // RUAN progresin
         const newProgress = {
           ...progress,
           completedQuizzes: {
             ...progress.completedQuizzes,
-            [quiz.id]: true, // p.sh. "js1": true
+            [quiz.id]: true,
           },
           scores: {
             ...progress.scores,
-            [quiz.id]: score + (isCorrect ? 1 : 0), // ruajmë pikët për këtë quiz
+            [quiz.id]: score + (isCorrect ? 1 : 0),
           },
         };
         saveProgress(newProgress);
@@ -48,10 +45,8 @@ export default function QuizScreen({ route, navigation }) {
 
   return (
     <SafeAreaView style={styles.safeContainer}>
-      {/* StatusBar me ngjyrë të bardhë ose "light-content" në varësi të preferencës */}
       <StatusBar barStyle="dark-content" backgroundColor="#f0f4f7" />
 
-      {/* Header i thjeshtë me titullin e quiz-it */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>{quiz.title}</Text>
       </View>
@@ -121,14 +116,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 8,
     padding: 20,
-    // Hijet në iOS + Android
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 2,
-
-    // Shtrirja
     flex: 1,
     justifyContent: 'center',
   },
@@ -155,7 +147,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   resultsContainer: {
-    // Qendra gjerësore dhe gjatësore
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
