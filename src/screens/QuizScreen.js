@@ -22,16 +22,15 @@ export default function QuizScreen({ route, navigation }) {
       } else {
         setShowResults(true);
 
-        // RUAN progresin
         const newProgress = {
           ...progress,
           completedQuizzes: {
             ...progress.completedQuizzes,
-            [quiz.id]: true, // p.sh. "js1": true
+            [quiz.id]: true, 
           },
           scores: {
             ...progress.scores,
-            [quiz.id]: score + (isCorrect ? 1 : 0), // ruajmë pikët për këtë quiz
+            [quiz.id]: score + (isCorrect ? 1 : 0), 
           },
         };
         saveProgress(newProgress);
@@ -81,5 +80,5 @@ export default function QuizScreen({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
-  // ... si më parë ...
+
 });
