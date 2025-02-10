@@ -67,6 +67,7 @@ export default function TutorialDetailScreen({ route, navigation }) {
     <View style={styles.container}>
       <Text style={styles.header}>{course.title}</Text>
 
+      {/* Butona për Quiz dhe Exercise */}
       <View style={styles.buttonContainer}>
         {selectedQuiz ? (
           <TouchableOpacity
