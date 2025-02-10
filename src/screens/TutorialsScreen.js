@@ -1,4 +1,3 @@
-// /src/screens/TutorialsScreen.js
 import React from 'react';
 import {
   View,
@@ -9,7 +8,6 @@ import {
 } from 'react-native';
 
 export default function TutorialsScreen({ navigation }) {
-  // Vetëm 4 kurset kryesore
   const mainTutorials = [
     { id: 'js-b', title: 'JavaScript Basics' },
     { id: 'es6-f', title: 'ES6 Features' },
@@ -19,7 +17,7 @@ export default function TutorialsScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Available Courses</Text>
+      <Text style={styles.header}>📚 Available Courses</Text>
 
       <FlatList
         data={mainTutorials}
@@ -27,6 +25,7 @@ export default function TutorialsScreen({ navigation }) {
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.item}
+            activeOpacity={0.7}
             onPress={() => navigation.navigate('TutorialDetail', { course: item })}
           >
             <Text style={styles.title}>{item.title}</Text>
@@ -39,18 +38,34 @@ export default function TutorialsScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20 },
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#F5F7FA', // Ngjyrë e butë për sfondin
+  },
   header: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 15,
+    textAlign: 'center',
+    color: '#333',
   },
   item: {
-    backgroundColor: '#fff',
-    padding: 15,
-    borderRadius: 8,
-    marginBottom: 10,
-    elevation: 2,
+    backgroundColor: '#ffffff',
+    padding: 18,
+    borderRadius: 12,
+    marginBottom: 12,
+    elevation: 3, // Efekt i hijes për Android
+    shadowColor: '#000', // Efekt i hijes për iOS
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    alignItems: 'center',
   },
-  title: { fontSize: 16, fontWeight: '600' },
+  title: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#444',
+  },
 });
+
