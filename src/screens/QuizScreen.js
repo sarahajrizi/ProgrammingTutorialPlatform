@@ -155,10 +155,10 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   correctAnswer: {
-    backgroundColor: '#2ECC71', // E gjelbër për përgjigje të sakta
+    backgroundColor: '#2ECC71',
   },
   wrongAnswer: {
-    backgroundColor: '#E74C3C', // E kuqe për përgjigje të gabuara
+    backgroundColor: '#E74C3C', 
   },
   resultsContainer: {
     flex: 1,
