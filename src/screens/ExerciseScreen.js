@@ -12,13 +12,13 @@ import {
 } from 'react-native';
 
 export default function ExerciseScreen({ route }) {
-  const { exercise } = route.params; // { id, title, description, solution }
+  const { exercise } = route.params; 
 
   const [code, setCode] = useState('');
   const [result, setResult] = useState('');
 
   const checkSolution = () => {
-    Keyboard.dismiss(); // Mbyll tastierën kur përdoruesi klikion butonin
+    Keyboard.dismiss();
     const cleanCode = code.replace(/\s/g, '');
     const cleanSolution = exercise.solution.replace(/\s/g, '');
     if (cleanCode === cleanSolution) {

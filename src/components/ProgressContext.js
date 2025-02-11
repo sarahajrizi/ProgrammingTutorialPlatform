@@ -1,17 +1,13 @@
-// /src/components/ProgressContext.js
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// 1) Krijo Context
 const ProgressContext = createContext();
 
-// 2) Krijo Provider-in
 export function ProgressProvider({ children }) {
   const [progress, setProgress] = useState({
-    completedQuizzes: {},  // p.sh. { "js1": true, "js2": true }
-    completedTutorials: [], // p.sh. ["Introduction to RN", "JavaScript Basics"]
-    scores: {},            // p.sh. { "js1": 4, "js2": 3 }
+    completedQuizzes: {},  
+    completedTutorials: [], 
+    scores: {},            
   });
 
   useEffect(() => {
@@ -38,7 +34,6 @@ export function ProgressProvider({ children }) {
     }
   };
 
-  // Kthe Provider-in me vlerat (progress, saveProgress)
   return (
     <ProgressContext.Provider value={{ progress, saveProgress }}>
       {children}
@@ -46,7 +41,6 @@ export function ProgressProvider({ children }) {
   );
 }
 
-// 3) Krijo një "hook" praktik për ta përdorur diku tjetër
 export function useProgress() {
   return useContext(ProgressContext);
 }

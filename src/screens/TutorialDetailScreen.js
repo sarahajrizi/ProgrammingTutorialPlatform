@@ -67,7 +67,6 @@ export default function TutorialDetailScreen({ route, navigation }) {
     <View style={styles.container}>
       <Text style={styles.header}>{course.title}</Text>
 
-      {/* Butona për Quiz dhe Exercise */}
       <View style={styles.buttonContainer}>
         {selectedQuiz ? (
           <TouchableOpacity
@@ -96,7 +95,6 @@ export default function TutorialDetailScreen({ route, navigation }) {
         )}
       </View>
 
-      {/* Lista e SubTutorialeve */}
       {!selectedSubTutorial ? (
         <>
           <Text style={styles.subHeader}>📚 Sub-Tutorials</Text>
@@ -114,7 +112,6 @@ export default function TutorialDetailScreen({ route, navigation }) {
           />
         </>
       ) : (
-        // WebView për SubTutorialin e zgjedhur
         <View style={styles.webviewContainer}>
           <TouchableOpacity style={styles.backButton} onPress={() => setSelectedSubTutorial(null)}>
             <Text style={styles.backButtonText}>⬅ Back to Sub-Tutorials</Text>
@@ -169,7 +166,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '600',
   },
   subHeader: {

@@ -1,5 +1,3 @@
-// /src/data/quizzes.js
-
 export const quizzesByCategory = {
   'JavaScript Basics': [
     {

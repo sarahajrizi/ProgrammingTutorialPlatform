@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#F5F7FA', // Ngjyrë e butë për sfondin
+    backgroundColor: '#F5F7FA', 
   },
   header: {
     fontSize: 24,
@@ -55,8 +55,8 @@ const styles = StyleSheet.create({
     padding: 18,
     borderRadius: 12,
     marginBottom: 12,
-    elevation: 3, // Efekt i hijes për Android
-    shadowColor: '#000', // Efekt i hijes për iOS
+    elevation: 3, 
+    shadowColor: '#000', 
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 5,

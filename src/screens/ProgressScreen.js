@@ -9,7 +9,6 @@ export default function ProgressScreen() {
     <View style={styles.container}>
       <Text style={styles.header}>📊 Your Progress</Text>
 
-      {/* Seksioni për tutorialet e përfunduara */}
       <View style={styles.card}>
         <Text style={styles.sectionTitle}>✅ Completed Tutorials</Text>
         {progress.completedTutorials?.length ? (
@@ -23,7 +22,6 @@ export default function ProgressScreen() {
         )}
       </View>
 
-      {/* Seksioni për rezultatet e quiz-it */}
       <View style={styles.card}>
         <Text style={styles.sectionTitle}>📝 Quiz Scores</Text>
         {Object.keys(progress.scores || {}).length ? (

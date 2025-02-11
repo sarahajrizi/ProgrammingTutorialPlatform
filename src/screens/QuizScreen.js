@@ -33,7 +33,6 @@ export default function QuizScreen({ route, navigation }) {
         } else {
           setShowResults(true);
 
-          // Ruajmë progresin
           const finalScore = score + (isCorrect ? 1 : 0);
           const newProgress = {
             ...progress,
@@ -42,7 +41,7 @@ export default function QuizScreen({ route, navigation }) {
           };
           saveProgress(newProgress);
         }
-      }, 500); // Koha e vogël për të parë animacionin
+      }, 500); 
     }
   };
 
@@ -50,14 +49,12 @@ export default function QuizScreen({ route, navigation }) {
     <SafeAreaView style={styles.safeContainer}>
       <StatusBar barStyle="dark-content" backgroundColor="#f0f4f7" />
 
-      {/* Titulli i quiz-it */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>{quiz.title}</Text>
       </View>
 
       <View style={styles.container}>
         {showResults ? (
-          // Kur quiz-i mbaron
           <View style={styles.resultsContainer}>
             <Text style={styles.scoreText}>🎉 Score: {score}/{quiz.questions.length}</Text>
             <Pressable style={styles.backButton} onPress={() => navigation.goBack()}>
@@ -65,7 +62,6 @@ export default function QuizScreen({ route, navigation }) {
             </Pressable>
           </View>
         ) : (
-          // Pyetjet dhe opsionet
           <View style={styles.questionContainer}>
             <Text style={styles.questionCount}>
               Question {currentQuestion + 1}/{quiz.questions.length}

@@ -13,7 +13,6 @@ import ProgressScreen from '../screens/ProgressScreen';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-// Më poshtë kombinoni gjithçka në një stack të vetëm:
 const TutorialStack = () => (
   <Stack.Navigator>
     <Stack.Screen name="TutorialsList" component={TutorialsScreen} />
