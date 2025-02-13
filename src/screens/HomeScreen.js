@@ -157,6 +157,7 @@ export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>👋 Welcome to CodeMaster!</Text>
+      <Text style={styles.subheader}>✨ Featured Tutorials:</Text>
       <FlatList
         data={featuredContent}
         keyExtractor={(item) => item.id}

@@ -5,7 +5,6 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
-  Button,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 
@@ -19,47 +18,21 @@ export default function TutorialDetailScreen({ route, navigation }) {
   let exerciseList = getExercisesByCategory ? getExercisesByCategory(course.title) : [];
 
   const selectedQuiz = quizList.length ? quizList[0] : null;
-  const selectedExercise = exerciseList.length ? exerciseList[0] : null;
+  const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
+  const [completedExercises, setCompletedExercises] = useState(false);
 
-  let subTutorials = [];
+  const handleExerciseCompletion = () => {
+    if (currentExerciseIndex < exerciseList.length - 1) {
+      setCurrentExerciseIndex(currentExerciseIndex + 1);
+    } else {
+      setCompletedExercises(true);
+    }
+  };
 
-  switch (course.title) {
-    case 'JavaScript Basics':
-      subTutorials = [
-        { id: 'jsb1', title: 'Variables & Data Types', html: `<h1>Variables & Data Types</h1><p>let, const, var</p>` },
-        { id: 'jsb2', title: 'Functions & Scope', html: `<h1>Functions & Scope</h1><p>Function declaration & expressions</p>` },
-        { id: 'jsb3', title: 'Operators & Conditions', html: `<h1>Operators & Conditions</h1><p>If-else, switch</p>` },
-      ];
-      break;
-
-    case 'ES6 Features':
-      subTutorials = [
-        { id: 'es6-1', title: 'Let & Const', html: `<h1>Let & Const</h1><p>Block scope variables</p>` },
-        { id: 'es6-2', title: 'Arrow Functions', html: `<h1>Arrow Functions</h1><p>Shorter function syntax</p>` },
-        { id: 'es6-3', title: 'Destructuring', html: `<h1>Destructuring</h1><p>Extracting values from objects/arrays</p>` },
-      ];
-      break;
-
-    case 'React Components':
-      subTutorials = [
-        { id: 'rc1', title: 'Functional Components', html: `<h1>Functional Components</h1><p>React components using functions</p>` },
-        { id: 'rc2', title: 'Class Components', html: `<h1>Class Components</h1><p>React components using class syntax</p>` },
-        { id: 'rc3', title: 'Props & Children', html: `<h1>Props & Children</h1><p>Passing data between components</p>` },
-      ];
-      break;
-
-    case 'State and Props':
-      subTutorials = [
-        { id: 'sp1', title: 'Introduction to State', html: `<h1>State Management</h1><p>Using useState</p>` },
-        { id: 'sp2', title: 'Passing Props', html: `<h1>Passing Props</h1><p>Sending data to child components</p>` },
-        { id: 'sp3', title: 'useState Hook', html: `<h1>useState Hook</h1><p>Managing state in functional components</p>` },
-      ];
-      break;
-
-    default:
-      subTutorials = [];
-      break;
-  }
+  let subTutorials = [
+    { id: 'sub1', title: 'Introduction', html: '<h1>Introduction</h1><p>Welcome to the tutorial.</p>' },
+    { id: 'sub2', title: 'Deep Dive', html: '<h1>Deep Dive</h1><p>Exploring the topic further.</p>' },
+  ];
 
   const [selectedSubTutorial, setSelectedSubTutorial] = useState(null);
 
@@ -68,7 +41,7 @@ export default function TutorialDetailScreen({ route, navigation }) {
       <Text style={styles.header}>{course.title}</Text>
 
       <View style={styles.buttonContainer}>
-        {selectedQuiz ? (
+        {selectedQuiz && selectedQuiz.questions.length === 10 ? (
           <TouchableOpacity
             style={styles.quizButton}
             onPress={() => navigation.navigate('Quiz', { quiz: selectedQuiz })}
@@ -81,13 +54,18 @@ export default function TutorialDetailScreen({ route, navigation }) {
           </TouchableOpacity>
         )}
 
-        {selectedExercise ? (
+        {exerciseList.length > 0 && !completedExercises ? (
           <TouchableOpacity
             style={styles.exerciseButton}
-            onPress={() => navigation.navigate('Exercise', { exercise: selectedExercise })}
+            onPress={() => navigation.navigate('Exercise', { 
+              exercise: exerciseList[currentExerciseIndex],
+              onComplete: handleExerciseCompletion,
+            })}
           >
-            <Text style={styles.buttonText}>💡 Practice Exercise</Text>
+            <Text style={styles.buttonText}>💡 Practice Exercise {currentExerciseIndex + 1}</Text>
           </TouchableOpacity>
+        ) : completedExercises ? (
+          <Text style={styles.successMessage}>🎉 You have completed all exercises successfully!</Text>
         ) : (
           <TouchableOpacity style={[styles.exerciseButton, styles.disabledButton]} disabled>
             <Text style={styles.buttonText}>No Exercise Available</Text>
@@ -169,6 +147,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
   },
+  successMessage: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#28A745',
+    textAlign: 'center',
+    marginTop: 10,
+  },
   subHeader: {
     fontSize: 20,
     fontWeight: 'bold',
@@ -207,4 +192,3 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
-

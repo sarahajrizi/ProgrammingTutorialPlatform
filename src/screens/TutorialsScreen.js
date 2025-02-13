@@ -13,6 +13,10 @@ export default function TutorialsScreen({ navigation }) {
     { id: 'es6-f', title: 'ES6 Features' },
     { id: 'react-c', title: 'React Components' },
     { id: 'state-p', title: 'State and Props' },
+    { id: 'node-js', title: 'Node.js Fundamentals' },
+    { id: 'python-b', title: 'Python Basics' },
+    { id: 'html-css', title: 'HTML & CSS Essentials' },
+    { id: 'data-science', title: 'Data Science Fundamentals' },
   ];
 
   return (
@@ -68,4 +72,3 @@ const styles = StyleSheet.create({
     color: '#444',
   },
 });
-

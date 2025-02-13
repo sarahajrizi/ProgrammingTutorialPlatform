@@ -474,6 +474,82 @@ export const quizzesByCategory = {
       ],
     },
   ],
+
+  'Node.js Fundamentals': [
+    {
+      id: 'nodejs-fundamentals-quiz',
+      title: 'Node.js Fundamentals Quiz',
+      questions: [
+        { question: '1. What is Node.js?', options: ['A JavaScript runtime', 'A programming language', 'A front-end framework', 'A database'], correctAnswers: [0], explanation: 'Node.js is a JavaScript runtime built on Chrome\'s V8 engine.' },
+        { question: '2. Which module is used to create a server in Node.js?', options: ['http', 'fs', 'express', 'path'], correctAnswers: [0], explanation: 'The http module in Node.js is used to create a server.' },
+        { question: '3. What command is used to initialize a new Node.js project?', options: ['npm start', 'node init', 'npm init', 'node start'], correctAnswers: [2], explanation: 'The npm init command initializes a new Node.js project.' },
+        { question: '4. How do you import a module in Node.js?', options: ['import module from \"module\"', 'require(\"module\")', 'include module', 'fetch(\"module\")'], correctAnswers: [1], explanation: 'Modules in Node.js are imported using require().' },
+        { question: '5. What is the purpose of package.json?', options: ['Stores configuration for the project', 'Contains JavaScript code', 'Defines routes in Express', 'Manages database connections'], correctAnswers: [0], explanation: 'package.json contains metadata about a Node.js project and its dependencies.' },
+        { question: '6. Which built-in module is used to work with file systems in Node.js?', options: ['os', 'path', 'fs', 'http'], correctAnswers: [2], explanation: 'The fs module is used for file system operations in Node.js.' },
+        { question: '7. What is Express.js?', options: ['A database', 'A Node.js framework', 'A JavaScript library', 'A package manager'], correctAnswers: [1], explanation: 'Express.js is a fast, unopinionated, minimalist web framework for Node.js.' },
+        { question: '8. How do you handle asynchronous operations in Node.js?', options: ['Using callbacks', 'Using Promises', 'Using async/await', 'All of the above'], correctAnswers: [3], explanation: 'Node.js supports asynchronous operations using callbacks, Promises, and async/await.' },
+        { question: '9. What is the event loop in Node.js?', options: ['A loop for iterating over arrays', 'A mechanism that handles asynchronous operations', 'A built-in function', 'A loop in Express'], correctAnswers: [1], explanation: 'The event loop is a mechanism in Node.js that handles non-blocking asynchronous operations.' },
+        { question: '10. Which command is used to install a package in Node.js?', options: ['npm install package-name', 'node install package-name', 'install package-name', 'package add'], correctAnswers: [0], explanation: 'npm install package-name is used to install a package in Node.js.' }
+      ]
+    }
+  ],
+
+  'Python Basics': [
+    {
+      id: 'python-basics-quiz',
+      title: 'Python Basics Quiz',
+      questions: [
+        { question: '1. What is the correct file extension for Python files?', options: ['.py', '.python', '.pyt', '.pt'], correctAnswers: [0], explanation: 'Python files use the .py extension.' },
+        { question: '2. How do you define a function in Python?', options: ['function myFunction():', 'def myFunction():', 'define myFunction():', 'func myFunction():'], correctAnswers: [1], explanation: 'Functions in Python are defined using the def keyword.' },
+        { question: '3. What is the correct way to create a list in Python?', options: ['list = {1,2,3}', 'list = [1,2,3]', 'list = (1,2,3)', 'list = "1,2,3"'], correctAnswers: [1], explanation: 'Lists in Python are defined using square brackets.' },
+        { question: '4. How do you insert an item into a list at a specific index?', options: ['list.insert(index, item)', 'list.add(index, item)', 'list.append(index, item)', 'list.push(index, item)'], correctAnswers: [0], explanation: 'The insert() method allows inserting an item at a specific index.' },
+        { question: '5. What is the correct way to open a file for reading in Python?', options: ['open("file.txt", "w")', 'open("file.txt", "r")', 'open("file.txt", "a")', 'open("file.txt", "x")'], correctAnswers: [1], explanation: 'The "r" mode opens a file for reading.' },
+        { question: '6. What keyword is used to handle exceptions in Python?', options: ['try', 'catch', 'error', 'except'], correctAnswers: [3], explanation: 'The except keyword is used to handle exceptions in Python.' },
+        { question: '7. How do you create a dictionary in Python?', options: ['dict = {"key": "value"}', 'dict = ["key": "value"]', 'dict = ("key": "value")', 'dict = "key": "value"'], correctAnswers: [0], explanation: 'Dictionaries in Python use curly braces and key-value pairs.' },
+        { question: '8. What function is used to get the length of a list in Python?', options: ['count()', 'size()', 'length()', 'len()'], correctAnswers: [3], explanation: 'The len() function returns the length of a list in Python.' },
+        { question: '9. Which of the following is a valid variable name in Python?', options: ['2var', '_var', 'var$', 'var-name'], correctAnswers: [1], explanation: 'Variable names in Python can start with an underscore but not a number or special character.' },
+        { question: '10. What keyword is used to define a class in Python?', options: ['class', 'define', 'object', 'type'], correctAnswers: [0], explanation: 'Classes in Python are defined using the class keyword.' }
+      ]
+    }
+  ],
+
+  'HTML & CSS Essentials': [
+    {
+      id: 'html-css-quiz',
+      title: 'HTML & CSS Essentials Quiz',
+      questions: [
+        { question: '1. What does HTML stand for?', options: ['Hyper Text Markup Language', 'Hyperlinks and Text Markup Language', 'Home Tool Markup Language', 'High Tech Markup Language'], correctAnswers: [0], explanation: 'HTML stands for Hyper Text Markup Language.' },
+        { question: '2. What is the correct HTML element for inserting a line break?', options: ['<br>', '<lb>', '<break>', '<line>'], correctAnswers: [0], explanation: 'The <br> tag inserts a line break in HTML.' },
+        { question: '3. Which CSS property is used to change the text color of an element?', options: ['text-color', 'fgcolor', 'color', 'font-color'], correctAnswers: [2], explanation: 'The color property is used to set the text color in CSS.' },
+        { question: '4. What is the default display value of a <div> element?', options: ['inline', 'block', 'inline-block', 'none'], correctAnswers: [1], explanation: 'A <div> element is by default a block-level element.' },
+        { question: '5. Which CSS property controls the text size?', options: ['font-size', 'text-style', 'font-style', 'text-size'], correctAnswers: [0], explanation: 'The font-size property controls the text size in CSS.' },
+        { question: '6. How do you apply a CSS style to all <p> elements?', options: ['p { style: ... }', 'p { css: ... }', 'p { properties: ... }', 'p { }'], correctAnswers: [3], explanation: 'The p { } syntax is used in CSS to style all <p> elements.' },
+        { question: '7. What is the correct HTML for adding a background color?', options: ['<body bg="yellow">', '<body style="background-color:yellow;">', '<background>yellow</background>', '<bg>yellow</bg>'], correctAnswers: [1], explanation: 'The correct way to set a background color is using the style attribute.' },
+        { question: '8. How do you create a hyperlink in HTML?', options: ['<a>http://example.com</a>', '<a href="http://example.com">Visit</a>', '<link>http://example.com</link>', '<hyper>http://example.com</hyper>'], correctAnswers: [1], explanation: 'The <a href="..."> tag is used to create hyperlinks in HTML.' },
+        { question: '9. Which CSS property is used to make text bold?', options: ['font-weight', 'bold-style', 'text-bold', 'weight'], correctAnswers: [0], explanation: 'The font-weight property is used to make text bold in CSS.' },
+        { question: '10. What does the z-index property in CSS control?', options: ['Text size', 'Stacking order of elements', 'Background color', 'Margins'], correctAnswers: [1], explanation: 'The z-index property controls the stacking order of overlapping elements.' }
+      ]
+    }
+  ],
+
+  'Data Science Fundamentals': [
+    {
+      id: 'data-science-quiz',
+      title: 'Data Science Fundamentals Quiz',
+      questions: [
+        { question: '1. What is data science?', options: ['A way to store data', 'A method for analyzing and interpreting complex data', 'A programming language', 'A database system'], correctAnswers: [1], explanation: 'Data science is a field that focuses on analyzing and interpreting complex data.' },
+        { question: '2. Which language is most commonly used for data science?', options: ['Java', 'Python', 'C++', 'Ruby'], correctAnswers: [1], explanation: 'Python is widely used for data science due to its powerful libraries like pandas and NumPy.' },
+        { question: '3. What is the purpose of machine learning in data science?', options: ['To manually process data', 'To create static reports', 'To build predictive models', 'To design websites'], correctAnswers: [2], explanation: 'Machine learning helps in creating predictive models based on data patterns.' },
+        { question: '4. What does pandas library in Python help with?', options: ['Web development', 'Data manipulation and analysis', 'Graphics rendering', 'Database management'], correctAnswers: [1], explanation: 'Pandas is a Python library used for data manipulation and analysis.' },
+        { question: '5. What is a data frame in pandas?', options: ['A single number', 'A 2D table-like data structure', 'A type of graph', 'A machine learning model'], correctAnswers: [1], explanation: 'A data frame in pandas is a two-dimensional table-like data structure used for storing and manipulating data.' },
+        { question: '6. What does NumPy provide in data science?', options: ['Database storage', 'Scientific computing and array operations', 'Web hosting', 'Cloud storage'], correctAnswers: [1], explanation: 'NumPy provides support for scientific computing and handling arrays in Python.' },
+        { question: '7. What is the purpose of data visualization?', options: ['To hide data', 'To make data more interpretable', 'To store data', 'To secure data'], correctAnswers: [1], explanation: 'Data visualization helps make complex data more understandable through charts and graphs.' },
+        { question: '8. What is a neural network?', options: ['A type of database', 'A machine learning model inspired by the human brain', 'A programming language', 'A network of databases'], correctAnswers: [1], explanation: 'A neural network is a machine learning model designed to mimic human brain functioning.' },
+        { question: '9. What is big data?', options: ['Small amounts of structured data', 'A database management system', 'Extremely large datasets that require special processing methods', 'A data compression technique'], correctAnswers: [2], explanation: 'Big data refers to extremely large datasets that require advanced methods to store, process, and analyze.' },
+        { question: '10. Which tool is commonly used for big data processing?', options: ['Excel', 'Hadoop', 'PowerPoint', 'Word'], correctAnswers: [1], explanation: 'Hadoop is a widely used tool for processing and analyzing big data.' }
+      ]
+    }
+  ]
 };
 
 export function getQuizzesByCategory(category) {
