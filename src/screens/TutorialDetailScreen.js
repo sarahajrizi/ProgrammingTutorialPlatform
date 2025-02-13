@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  FlatList,
   TouchableOpacity,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
@@ -18,12 +17,11 @@ export default function TutorialDetailScreen({ route, navigation }) {
 
   const selectedQuiz = quizList.length ? quizList[0] : null;
 
-  let subTutorials = [
-    { id: 'sub1', title: 'Introduction', html: '<h1>Introduction</h1><p>Welcome to the tutorial.</p>' },
-    { id: 'sub2', title: 'Deep Dive', html: '<h1>Deep Dive</h1><p>Exploring the topic further.</p>' },
-  ];
-
-  const [selectedSubTutorial, setSelectedSubTutorial] = useState(null);
+  const tutorialContent = `
+    <h1>${course.title}</h1>
+    <p>Welcome to the ${course.title} tutorial! In this section, you'll learn the fundamental concepts of ${course.title.toLowerCase()}.</p>
+    <p>Follow along with the exercises and quiz to test your knowledge.</p>
+  `;
 
   return (
     <View style={styles.container}>
@@ -57,30 +55,10 @@ export default function TutorialDetailScreen({ route, navigation }) {
         )}
       </View>
 
-      {!selectedSubTutorial ? (
-        <>
-          <Text style={styles.subHeader}>📚 Sub-Tutorials</Text>
-          <FlatList
-            data={subTutorials}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                style={styles.subItem}
-                onPress={() => setSelectedSubTutorial(item)}
-              >
-                <Text style={styles.subItemText}>📖 {item.title}</Text>
-              </TouchableOpacity>
-            )}
-          />
-        </>
-      ) : (
-        <View style={styles.webviewContainer}>
-          <TouchableOpacity style={styles.backButton} onPress={() => setSelectedSubTutorial(null)}>
-            <Text style={styles.backButtonText}>⬅ Back to Sub-Tutorials</Text>
-          </TouchableOpacity>
-          <WebView source={{ html: selectedSubTutorial.html }} style={styles.webview} />
-        </View>
-      )}
+      {/* ✅ WebView që shfaq përmbajtjen e vetme të tutorialit */}
+      <View style={styles.webviewContainer}>
+        <WebView source={{ html: tutorialContent }} style={styles.webview} />
+      </View>
     </View>
   );
 }
@@ -131,41 +109,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
   },
-  subHeader: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    color: '#444',
-  },
-  subItem: {
-    backgroundColor: '#ffffff',
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 10,
-    elevation: 3,
-    alignItems: 'center',
-  },
-  subItemText: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#2C3E50',
-  },
   webviewContainer: {
     flex: 1,
+    marginTop: 10,
   },
   webview: {
     flex: 1,
   },
-  backButton: {
-    padding: 12,
-    backgroundColor: '#FF3B30',
-    borderRadius: 10,
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  backButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
 });
+
