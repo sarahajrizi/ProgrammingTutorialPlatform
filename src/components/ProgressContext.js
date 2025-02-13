@@ -7,6 +7,7 @@ export function ProgressProvider({ children }) {
   const [progress, setProgress] = useState({
     completedQuizzes: {},  
     completedTutorials: [], 
+    completedExercises: {}, 
     scores: {},            
   });
 
@@ -33,9 +34,22 @@ export function ProgressProvider({ children }) {
       console.error('Failed to save progress:', e);
     }
   };
+  
+  const completeExercise = (courseId) => {
+    setProgress((prevProgress) => {
+      const newCompletedExercises = {
+        ...prevProgress.completedExercises,
+        [courseId]: (prevProgress.completedExercises[courseId] || 0) + 1,
+      };
+
+      const newProgress = { ...prevProgress, completedExercises: newCompletedExercises };
+      saveProgress(newProgress);
+      return newProgress;
+    });
+  };
 
   return (
-    <ProgressContext.Provider value={{ progress, saveProgress }}>
+    <ProgressContext.Provider value={{ progress, saveProgress, completeExercise }}>
       {children}
     </ProgressContext.Provider>
   );

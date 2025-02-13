@@ -9,20 +9,45 @@ import {
   Platform,
   Keyboard,
   TouchableWithoutFeedback,
+  ActivityIndicator,
 } from 'react-native';
 
 export default function ExerciseScreen({ route }) {
-  const { exercise } = route.params; 
+  const { exercises, onComplete } = route.params;
 
+  const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
   const [code, setCode] = useState('');
   const [result, setResult] = useState('');
+  const [loadingNext, setLoadingNext] = useState(false);
+  const [completed, setCompleted] = useState(false);
+
+  const currentExercise = exercises[currentExerciseIndex];
 
   const checkSolution = () => {
     Keyboard.dismiss();
     const cleanCode = code.replace(/\s/g, '');
-    const cleanSolution = exercise.solution.replace(/\s/g, '');
+    const cleanSolution = currentExercise.solution.replace(/\s/g, '');
+
     if (cleanCode === cleanSolution) {
       setResult('✅ Correct! 🎉');
+
+      setTimeout(() => {
+        setResult('');
+        setCode('');
+
+        if (currentExerciseIndex < exercises.length - 1) {
+          setLoadingNext(true);
+          setTimeout(() => {
+            setCurrentExerciseIndex(currentExerciseIndex + 1);
+            setLoadingNext(false);
+          }, 1500); 
+        } else {
+          setCompleted(true);
+          setTimeout(() => {
+            onComplete();
+          }, 2000); 
+        }
+      }, 1000);
     } else {
       setResult('❌ Try again! 💪');
     }
@@ -34,29 +59,42 @@ export default function ExerciseScreen({ route }) {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
       >
-        <Text style={styles.title}>{exercise.title}</Text>
-        <Text style={styles.description}>{exercise.description}</Text>
+        {loadingNext ? (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#007AFF" />
+            <Text style={styles.loadingText}>Loading new exercise...</Text>
+          </View>
+        ) : completed ? (
+          <View style={styles.successContainer}>
+            <Text style={styles.successText}>🎉 You have completed all exercises successfully!</Text>
+          </View>
+        ) : (
+          <>
+            <Text style={styles.title}>{currentExercise.title}</Text>
+            <Text style={styles.description}>{currentExercise.description}</Text>
 
-        <TextInput
-          style={styles.codeInput}
-          multiline
-          placeholder="Write your code here..."
-          value={code}
-          onChangeText={setCode}
-          autoCapitalize="none"
-          autoCorrect={false}
-          textAlignVertical="top"
-        />
+            <TextInput
+              style={styles.codeInput}
+              multiline
+              placeholder="Write your code here..."
+              value={code}
+              onChangeText={setCode}
+              autoCapitalize="none"
+              autoCorrect={false}
+              textAlignVertical="top"
+            />
 
-        <TouchableOpacity style={styles.button} onPress={checkSolution} activeOpacity={0.7}>
-          <Text style={styles.buttonText}>Check Solution</Text>
-        </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={checkSolution} activeOpacity={0.7}>
+              <Text style={styles.buttonText}>Check Solution</Text>
+            </TouchableOpacity>
 
-        {result ? (
-          <Text style={[styles.result, result.includes('Correct') ? styles.correct : styles.wrong]}>
-            {result}
-          </Text>
-        ) : null}
+            {result ? (
+              <Text style={[styles.result, result.includes('Correct') ? styles.correct : styles.wrong]}>
+                {result}
+              </Text>
+            ) : null}
+          </>
+        )}
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
@@ -67,6 +105,27 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: '#F5F7FA',
+    justifyContent: 'center',
+  },
+  loadingContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#555',
+  },
+  successContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  successText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#28A745',
+    textAlign: 'center',
   },
   title: {
     fontSize: 24,

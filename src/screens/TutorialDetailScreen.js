@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
-
 import { getQuizzesByCategory } from '../data/quizzes';
 import { getExercisesByCategory } from '../data/exercises';
 
@@ -18,16 +17,6 @@ export default function TutorialDetailScreen({ route, navigation }) {
   let exerciseList = getExercisesByCategory ? getExercisesByCategory(course.title) : [];
 
   const selectedQuiz = quizList.length ? quizList[0] : null;
-  const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
-  const [completedExercises, setCompletedExercises] = useState(false);
-
-  const handleExerciseCompletion = () => {
-    if (currentExerciseIndex < exerciseList.length - 1) {
-      setCurrentExerciseIndex(currentExerciseIndex + 1);
-    } else {
-      setCompletedExercises(true);
-    }
-  };
 
   let subTutorials = [
     { id: 'sub1', title: 'Introduction', html: '<h1>Introduction</h1><p>Welcome to the tutorial.</p>' },
@@ -54,21 +43,16 @@ export default function TutorialDetailScreen({ route, navigation }) {
           </TouchableOpacity>
         )}
 
-        {exerciseList.length > 0 && !completedExercises ? (
+        {exerciseList.length > 0 ? (
           <TouchableOpacity
             style={styles.exerciseButton}
-            onPress={() => navigation.navigate('Exercise', { 
-              exercise: exerciseList[currentExerciseIndex],
-              onComplete: handleExerciseCompletion,
-            })}
+            onPress={() => navigation.navigate('Exercise', { exercises: exerciseList })}
           >
-            <Text style={styles.buttonText}>💡 Practice Exercise {currentExerciseIndex + 1}</Text>
+            <Text style={styles.buttonText}>💡 Practice Exercises</Text>
           </TouchableOpacity>
-        ) : completedExercises ? (
-          <Text style={styles.successMessage}>🎉 You have completed all exercises successfully!</Text>
         ) : (
           <TouchableOpacity style={[styles.exerciseButton, styles.disabledButton]} disabled>
-            <Text style={styles.buttonText}>No Exercise Available</Text>
+            <Text style={styles.buttonText}>No Exercises Available</Text>
           </TouchableOpacity>
         )}
       </View>
@@ -146,13 +130,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 14,
     fontWeight: '600',
-  },
-  successMessage: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#28A745',
-    textAlign: 'center',
-    marginTop: 10,
   },
   subHeader: {
     fontSize: 20,
