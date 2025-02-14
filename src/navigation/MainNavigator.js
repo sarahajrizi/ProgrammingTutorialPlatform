@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { FontAwesome } from '@expo/vector-icons'; // Importo ikonat
 
 import HomeScreen from '../screens/HomeScreen';
 import TutorialsScreen from '../screens/TutorialsScreen';
@@ -30,7 +31,23 @@ const TutorialStack = () => (
 
 export default function MainNavigator() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, size }) => {
+          let iconName;
+
+          if (route.name === 'Home') {
+            iconName = 'home';
+          } else if (route.name === 'Tutorials') {
+            iconName = 'laptop';
+          } else if (route.name === 'Progres') {
+            iconName = 'line-chart';
+          }
+
+          return <FontAwesome name={iconName} size={size} color={color} />;
+        },
+      })}
+    >
       <Tab.Screen name="Home" component={HomeStack} />
       <Tab.Screen name="Tutorials" component={TutorialStack} />
       <Tab.Screen name="Progres" component={ProgressScreen} />
