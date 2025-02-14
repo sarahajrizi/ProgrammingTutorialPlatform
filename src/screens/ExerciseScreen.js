@@ -5,15 +5,17 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
-  Keyboard,
   TouchableWithoutFeedback,
   ActivityIndicator,
 } from 'react-native';
+import { useProgress } from '../components/ProgressContext';
 
 export default function ExerciseScreen({ route }) {
-  const { exercises, onComplete } = route.params;
+  const { exercises, onComplete, category } = route.params;
+  const { progress, saveProgress } = useProgress();
 
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
   const [code, setCode] = useState('');
@@ -40,12 +42,25 @@ export default function ExerciseScreen({ route }) {
           setTimeout(() => {
             setCurrentExerciseIndex(currentExerciseIndex + 1);
             setLoadingNext(false);
-          }, 1500); 
+          }, 1500);
         } else {
           setCompleted(true);
+
+          const newCompletedExercises = {
+            ...progress.completedExercises,
+            [category]: exercises.length, // ✅ Ruajmë numrin e ushtrimeve të kryera
+          };
+
+          const newProgress = {
+            ...progress,
+            completedExercises: newCompletedExercises,
+          };
+
+          saveProgress(newProgress);
+
           setTimeout(() => {
             onComplete();
-          }, 2000); 
+          }, 2000);
         }
       }, 1000);
     } else {

@@ -38,54 +38,33 @@ export default function ProgressScreen() {
           <Text style={styles.noData}>No quiz scores yet.</Text>
         )}
       </View>
+
+      <View style={styles.card}>
+        <Text style={styles.sectionTitle}>💡 Exercise Scores</Text>
+        {Object.keys(progress.completedExercises || {}).length ? (
+          <FlatList
+            data={Object.entries(progress.completedExercises)}
+            keyExtractor={([exerciseId]) => exerciseId}
+            renderItem={({ item: [exerciseId, score] }) => (
+              <Text style={styles.item}>
+                📌 {exerciseId || 'Unknown Category'}: <Text style={styles.score}>{score}/3 exercises</Text>
+              </Text>
+            )}
+          />
+        ) : (
+          <Text style={styles.noData}>No exercise progress yet.</Text>
+        )}
+      </View>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: '#F5F7FA',
-  },
-  header: {
-    fontSize: 26,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 20,
-    color: '#333',
-  },
-  card: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    padding: 15,
-    marginBottom: 20,
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-  },
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    color: '#444',
-  },
-  item: {
-    fontSize: 16,
-    marginBottom: 6,
-    paddingLeft: 10,
-    color: '#2C3E50',
-  },
-  score: {
-    fontWeight: 'bold',
-    color: '#007AFF',
-  },
-  noData: {
-    fontSize: 16,
-    fontStyle: 'italic',
-    color: '#999',
-    textAlign: 'center',
-  },
+const styles = StyleSheet.create({ 
+  container: { flex: 1, padding: 20, backgroundColor: '#F5F7FA' },
+  header: { fontSize: 26, fontWeight: 'bold', textAlign: 'center', marginBottom: 20, color: '#333' },
+  card: { backgroundColor: '#FFFFFF', borderRadius: 12, padding: 15, marginBottom: 20, elevation: 3 },
+  sectionTitle: { fontSize: 20, fontWeight: 'bold', marginBottom: 10, color: '#444' },
+  item: { fontSize: 16, marginBottom: 6, paddingLeft: 10, color: '#2C3E50' },
+  score: { fontWeight: 'bold', color: '#007AFF' },
+  noData: { fontSize: 16, fontStyle: 'italic', color: '#999', textAlign: 'center' },
 });
