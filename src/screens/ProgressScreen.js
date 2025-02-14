@@ -5,11 +5,6 @@ import { useProgress } from '../components/ProgressContext';
 export default function ProgressScreen() {
   const { progress } = useProgress();
 
-  const exercisesProgress = Object.entries(progress.completedExercises || {}).map(([course, count]) => ({
-    course,
-    completed: count,
-  }));
-
   return (
     <View style={styles.container}>
       <Text style={styles.header}>📊 Your Progress</Text>
@@ -24,23 +19,6 @@ export default function ProgressScreen() {
           />
         ) : (
           <Text style={styles.noData}>No tutorials completed yet.</Text>
-        )}
-      </View>
-
-      <View style={styles.card}>
-        <Text style={styles.sectionTitle}>💡 Exercises Progress</Text>
-        {exercisesProgress.length ? (
-          <FlatList
-            data={exercisesProgress}
-            keyExtractor={(item) => item.course}
-            renderItem={({ item }) => (
-              <Text style={styles.item}>
-                🎯 {item.course}: <Text style={styles.score}>{item.completed} exercises completed</Text>
-              </Text>
-            )}
-          />
-        ) : (
-          <Text style={styles.noData}>No exercises completed yet.</Text>
         )}
       </View>
 

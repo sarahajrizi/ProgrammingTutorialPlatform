@@ -1,15 +1,16 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const defaultProgress = {
+  completedQuizzes: {},
+  completedTutorials: [],
+  scores: {},
+};
+
 const ProgressContext = createContext();
 
 export function ProgressProvider({ children }) {
-  const [progress, setProgress] = useState({
-    completedQuizzes: {},  
-    completedTutorials: [], 
-    completedExercises: {}, 
-    scores: {},            
-  });
+  const [progress, setProgress] = useState(defaultProgress);
 
   useEffect(() => {
     loadProgress();
@@ -18,38 +19,44 @@ export function ProgressProvider({ children }) {
   const loadProgress = async () => {
     try {
       const savedProgress = await AsyncStorage.getItem('@progress');
+      console.log("📂 [LOAD PROGRESS] Nga AsyncStorage:", savedProgress);
+
       if (savedProgress) {
-        setProgress(JSON.parse(savedProgress));
+        const parsedProgress = JSON.parse(savedProgress);
+        if (typeof parsedProgress === 'object' && parsedProgress !== null) {
+          console.log("✅ [LOADED] Progresi u ngarkua me sukses:", parsedProgress);
+          setProgress(parsedProgress);
+        } else {
+          console.error("⚠ [ERROR] Të dhënat e korruptuara, duke përdorur defaultProgress...");
+          await AsyncStorage.removeItem('@progress');
+          setProgress(defaultProgress);
+        }
+      } else {
+        console.warn("⚠ [WARNING] Nuk kishte të dhëna në AsyncStorage, vendos defaultProgress.");
+        setProgress(defaultProgress);
       }
     } catch (e) {
-      console.error('Failed to load progress:', e);
+      console.error('❌ [ERROR] Nuk mund të ngarkoj progresin:', e);
+      setProgress(defaultProgress);
     }
   };
 
   const saveProgress = async (newProgress) => {
     try {
+      if (!newProgress || typeof newProgress !== 'object') {
+        console.error("⚠ [ERROR] Tentativë për të ruajtur një vlerë të pavlefshme në progress!");
+        return;
+      }
+      console.log("💾 [SAVE PROGRESS] Po ruaj progresin:", newProgress);
       await AsyncStorage.setItem('@progress', JSON.stringify(newProgress));
       setProgress(newProgress);
     } catch (e) {
-      console.error('Failed to save progress:', e);
+      console.error('❌ [ERROR] Nuk mund të ruaj progresin:', e);
     }
-  };
-  
-  const completeExercise = (courseId) => {
-    setProgress((prevProgress) => {
-      const newCompletedExercises = {
-        ...prevProgress.completedExercises,
-        [courseId]: (prevProgress.completedExercises[courseId] || 0) + 1,
-      };
-
-      const newProgress = { ...prevProgress, completedExercises: newCompletedExercises };
-      saveProgress(newProgress);
-      return newProgress;
-    });
   };
 
   return (
-    <ProgressContext.Provider value={{ progress, saveProgress, completeExercise }}>
+    <ProgressContext.Provider value={{ progress, saveProgress }}>
       {children}
     </ProgressContext.Provider>
   );
