@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { useTheme } from '../components/ThemeContext'; 
 
 export default function HomeScreen({ navigation }) {
+  const { theme, toggleTheme } = useTheme(); 
   const featuredContent = [
     {
       id: 'js-b',
@@ -42,7 +44,7 @@ export default function HomeScreen({ navigation }) {
       videos: [
         { id: '1', title: '🐍 Python Full Course', thumbnail: 'https://i.ytimg.com/vi/rfscVS0vtbw/maxresdefault.jpg', duration: '4:26:45', link: 'https://www.youtube.com/watch?v=rfscVS0vtbw' },
         { id: '2', title: '🐍 Python OOP - Classes & Objects', thumbnail: 'https://i.ytimg.com/vi/JeznW_7DlB0/maxresdefault.jpg', duration: '1:10:12', link: 'https://www.youtube.com/watch?v=JeznW_7DlB0' },
-    ]
+      ]
     },
     {
       id: 'game-dev',
@@ -155,26 +157,28 @@ export default function HomeScreen({ navigation }) {
   ];
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>👋 Welcome to CodeMaster!</Text>
-      <Text style={styles.subheader}>✨ Featured Tutorials:</Text>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
+      <Text style={[styles.header, { color: theme.headerText }]}>👋 Welcome to CodeMaster!</Text>
+      <Text style={[styles.subheader, { color: theme.text }]}>✨ Featured Tutorials:</Text>
       <FlatList
         data={featuredContent}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity
-            style={styles.item}
+            style={[styles.item, { backgroundColor: theme.cardBackground }]}
             activeOpacity={0.7}
             onPress={() => navigation.navigate('VideoList', { title: item.title, videos: item.videos })}
           >
-            <Text style={styles.itemText}>{item.title}</Text>
+            <Text style={[styles.itemText, { color: theme.text }]}>{item.title}</Text>
           </TouchableOpacity>
         )}
       />
+      <TouchableOpacity style={styles.themeButton} onPress={toggleTheme}>
+        <Text style={styles.themeButtonText}>Toggle Theme</Text>
+      </TouchableOpacity>
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -229,16 +233,28 @@ const styles = StyleSheet.create({
   courseTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#1E40AF', 
+    color: '#1E40AF',
   },
   videoTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#374151', 
+    color: '#374151',
     marginTop: 5,
   },
   videoDuration: {
     fontSize: 14,
-    color: '#6B7280', 
+    color: '#6B7280',
+  },
+  themeButton: {
+    backgroundColor: '#36E732', 
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  themeButtonText: {
+    color: '#FFFFFF', 
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
