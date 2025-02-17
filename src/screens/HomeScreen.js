@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
   },
   themeButton: {
     backgroundColor: '#36E732', 
-    padding: 12,
+    padding: 4,
     borderRadius: 8,
     alignItems: 'center',
     marginTop: 10,
