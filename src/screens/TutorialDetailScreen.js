@@ -17,9 +17,21 @@ export default function TutorialDetailScreen({ route, navigation }) {
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
-          body { font-family: Arial, sans-serif; padding: 20px; color: #333; }
-          h1 { color: #333; text-align: center; }
-          p { font-size: 16px; line-height: 1.6; }
+          body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            color: ${theme.text};
+            background-color: ${theme.background};
+          }
+          h1 {
+            color: ${theme.headerText};
+            text-align: center;
+          }
+          p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: ${theme.text};
+          }
         </style>
       </head>
       <body>
