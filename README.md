@@ -26,6 +26,9 @@ Redux / Context API – Manages the app’s state.
 Firebase – Used for authentication and data storage.
 Styled Components / React Native Paper – For styling and UI/UX improvements.
 
+Video of project:
+https://github.com/user-attachments/assets/6401fee7-6515-4d57-876a-2617b507823c
+
 📦 Installation and Setup
 Step 1: Project Setup
 Install Expo CLI globally:
